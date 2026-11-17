@@ -17,7 +17,7 @@ export function initMotion(){
   const setStage=index=>{steps.forEach((step,i)=>step.toggleAttribute('data-active',i===index));gsap.to(diagrams,{opacity:i=>i===index?1:0,scale:i=>i===index?1:.96,duration:.35,overwrite:true,ease:'power2.out'});counter.textContent=`0${index+1} / 04`;};
   steps.forEach((step,i)=>ScrollTrigger.create({trigger:step,start:'top 55%',end:'bottom 55%',onEnter:()=>setStage(i),onEnterBack:()=>setStage(i)}));
   gsap.to('[data-story-progress]',{scaleX:1,ease:'none',scrollTrigger:{trigger:story,start:'top 50%',end:'bottom 70%',scrub:true}});
-  return()=>{steps.forEach(step=>step.removeAttribute('data-active'));counter.textContent='01 / 04';};
+  return()=>{gsap.killTweensOf(diagrams);diagrams.forEach(el=>{el.style.removeProperty('opacity');el.style.removeProperty('transform');});steps.forEach(step=>step.removeAttribute('data-active'));counter.textContent='01 / 04';};
  });
  media.add('(prefers-reduced-motion: no-preference) and (pointer: fine) and (min-width: 761px)',()=>{
   const lenis=new Lenis({autoRaf:false,anchors:{offset:-100}});lenis.on('scroll',ScrollTrigger.update);const tick=time=>lenis.raf(time*1000);gsap.ticker.add(tick);gsap.ticker.lagSmoothing(0);

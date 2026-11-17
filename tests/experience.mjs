@@ -5,7 +5,7 @@ const origin=process.env.TEST_URL||'http://127.0.0.1:4173';
 try{
  const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
  for(const route of ['/','/ar/']){
-  await page.goto(origin+route);await page.waitForTimeout(1500);await page.screenshot({path:`docs/${route==='/'?'en':'ar'}-motion-hero.png`});
+  await page.goto(origin+route);await page.waitForTimeout(1500);if(await page.locator('[data-scene-canvas]').isVisible())assert.equal(await page.locator('[data-scene-fallback]').isVisible(),false);await page.screenshot({path:`docs/${route==='/'?'en':'ar'}-motion-hero.png`});
   const marquee=page.locator('[data-marquee]');await marquee.scrollIntoViewIfNeeded();await page.waitForTimeout(200);const toggle=page.locator('[data-marquee-toggle]');await toggle.click();assert.equal(await toggle.getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-marquee-track]').evaluate(el=>getComputedStyle(el).animationPlayState),'paused');
   await page.mouse.move(0,0);await toggle.click();await toggle.evaluate(el=>el.blur());await page.mouse.move(0,0);await page.waitForTimeout(200);assert.equal(await marquee.evaluate(el=>el.classList.contains('is-running')),true);
   for(const index of [0,1,2,3]){await page.locator(`[data-story-step="${index}"]`).evaluate(el=>el.scrollIntoView({block:"center"}));await page.waitForTimeout(700);assert.equal(await page.locator('[data-story-counter]').textContent(),`0${index+1} / 04`);}
