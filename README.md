@@ -34,7 +34,7 @@ Run `npm run generate` after text changes, or `npm run build` for the complete o
 
 ## Portrait and brand assets
 
-The exact supplied portrait is preserved at `source-assets/portrait/mohamed-original.jpeg`; `image.jpeg` also remains untouched. The public assets are 960px, 640px and 480px WebP derivatives in `public/assets/images/`. A white editorial frame retains the original white/yellow background because clean background removal was unavailable. No face or body has been regenerated or retouched, and no transparent fallback is needed for the framed design.
+The latest owner-supplied edited portrait is `image.png`, preserved byte-for-byte at `source-assets/portrait/mohamed-updated.png`. Its navy/cyan background is opaque and part of the supplied image. The earlier original remains at `source-assets/portrait/mohamed-original.jpeg`; the owner's removal of root `image.jpeg` was preserved. The active 960/640/480px WebP derivatives live in `public/assets/images/profile/`, retain aspect ratio, and use restrained CSS edge blending. No face/body was generated, reshaped or retouched. The white card, circular framing and duplicate decorative MM around the portrait have been removed. Asset preparation can fall back to the preserved source when root attachments are absent.
 
 The filled MM logo uses a single geometry source, `src/data/brand.json`, for inline markup, SVG exports, favicon and the 1200×630 sharing image. Its two bold letters use matching stems, open counters and complementary corner cuts. The name sits alongside it in a compact two-line lockup in both languages. Public exports: `monogram.svg` (currentColor), `logo-navy.svg`, `logo-white.svg`, `logo-cyan.svg`, `logo-transparent.png`, and the presentation sheet `logo-preview.png`. All are in `public/assets/brand/`.
 
@@ -107,6 +107,18 @@ For Vercel use build command `npm run build`, output directory `dist`. Both `/` 
 For a subdirectory, set `SITE_BASE=/portfolio/` before building (PowerShell: `$env:SITE_BASE='/portfolio/'`). Both generated page links and Vite assets respect it. Clear `SITE_BASE` before returning to a root deployment.
 
 ## Verification
+
+The final readiness pass adds `node tests/final-readiness.mjs`: bilingual enquiry validation/preview/copy/WhatsApp encoding (intercepted locally, no message sent), shared dialog URLs and reload, native comparison range keyboard behavior, permission gating, 404 pages, and six desktop/tablet/mobile screenshots. Results and limitations: `docs/final-readiness.md`.
+
+The current canonical origin is the owner-supplied `https://mohamed-monsef.vercel.app`. Older domain references in historical reports describe prior deployments. Indexing stays blocked pending launch approval. `404.html` and `ar/404.html` are real Vite multipage inputs; actual host error-response behavior must be checked after an approved deployment.
+
+Project enquiries use `src/data/enquiry.js` for localized labels, industry choices and configurable budget options. `scripts/enquiry-template.mjs` renders the form; `src/js/enquiry.js` validates, previews, copies or explicitly opens WhatsApp. No backend, storage or analytics is enabled. Budget choices are not service prices. Without JS the form is omitted and direct WhatsApp contact remains available.
+
+Approved campaign entries may group multiple images/videos in their existing media array. Add an optional `comparison` object only for genuine matching before/after assets: `{permissionConfirmed:true,width,height,before:{src,alt:{en,ar}},after:{src,alt:{en,ar}}}`. Both public asset files, translations and dimensions are validated at build time. The native range renderer (`scripts/comparison-template.mjs`) and initializer (`src/js/comparison.js`) are reusable; no comparison is shown with the current empty real-project data.
+
+Project dialogs now expose shareable `#project=concept-ID`, `#project=client-ID` and `#project=motion-study` fragments. Refreshing a shared URL opens the matching detail; Escape restores the previous anchor and focus. Native original-media links remain the no-JS fallback. No empty project pages are generated.
+
+Analytics is intentionally inactive. Future authorized integration can observe existing project/filter/media, comparison, enquiry, WhatsApp and locale controls through their data attributes and native events. Never collect preview/enquiry text or copy it to analytics.
 
 With the production preview running:
 

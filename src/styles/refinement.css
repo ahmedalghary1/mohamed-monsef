@@ -1,7 +1,5 @@
 /* Scoped editorial components; shared colors and spacing stay in tokens.css. */
 .site-header[data-scrolled] .header-inner{min-height:72px}
-.portrait-initials{position:absolute;inset-block-start:-64px;inset-inline-start:-40px;font:600 clamp(140px,20vw,300px)/1 var(--display);letter-spacing:-.08em;color:var(--brand);opacity:.045;pointer-events:none}
-.hero-portrait .portrait-surround{border-radius:8px;border:1px solid var(--dark-line)}
 .hero .hero-intro{max-width:52ch;font-size:17px}
 #work{scroll-margin-top:88px;padding-block-start:var(--section-space)}
 #work .concept-lab{padding-block-start:0}
@@ -65,7 +63,6 @@ html[lang=ar] .footer-wordmark{letter-spacing:normal}
 .mobile-menu-extras>a{min-height:44px;display:flex;align-items:center}.mobile-menu-extras .contact-channel{font-size:14px}
 @media(max-width:760px){
  .hero .hero-intro{font-size:16px}.hero .hero-name{font-size:22px}
- .portrait-initials{font-size:180px;inset-block-start:-28px;inset-inline-start:-8px}
  .concept-lab .concept-gallery{grid-template-columns:minmax(0,1fr)}
  .concept-lab .concept-item:first-child{grid-column:auto}
  .concept-lab .concept-item:nth-child(3){padding-top:0}
