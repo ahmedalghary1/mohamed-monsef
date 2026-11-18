@@ -51,7 +51,7 @@
 .contact-channel svg{width:24px;height:24px}.contact-channel[data-channel=facebook]:hover{color:#8AB8FF}
 .contact-channel[data-channel=whatsapp]:hover{color:var(--whatsapp)}
 .contact .contact-actions{display:grid;min-width:min(100%,340px)}
-.floating-whatsapp{position:fixed;inset-inline-end:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:var(--whatsapp);color:var(--deep);box-shadow:0 4px 16px rgb(0 0 0 / 15%)}
+.floating-whatsapp{position:fixed;inset-inline-end:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:30;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--whatsapp);color:var(--deep);box-shadow:0 4px 16px rgb(0 0 0 / 15%)}
 .floating-whatsapp>svg{display:block;width:32px;height:32px;padding:0;background:none;color:var(--surface)}
 .floating-whatsapp>span{position:absolute;inset-inline-end:76px;white-space:nowrap;background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none}
 .floating-whatsapp:is(:hover,:focus-visible)>span{opacity:1}

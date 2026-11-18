@@ -1,3 +1,4 @@
+import { profile } from '../src/data/profile.js';
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { siteConfig } from '../src/data/site-config.js';
@@ -11,12 +12,13 @@ for(const locale of ['en','ar']) {
     const url=siteConfig.domain+(locale==='ar'?'/ar/':'/');
     for(const marker of [`rel="canonical" href="${url}"`,'hreflang="ar"','hreflang="en"','og:image','WebSite','social-preview.png'])assert(html.includes(marker),`${path} missing ${marker}`);
   }
-  assert(!html.includes('mailto:'));assert(!html.includes('Mohamed Monsef (2).pdf'));
+  assert.equal(html.includes('mailto:'),Boolean(profile.contact.email));assert(!html.includes('Mohamed Monsef (2).pdf'));
 }
 if(siteConfig.domain){
   const sitemap=await readFile('dist/sitemap.xml','utf8');
   assert(sitemap.includes(siteConfig.domain+'/ar/'));
 }
 await Promise.all(['social-preview.png','monogram.svg'].map(name=>access('dist/assets/brand/'+name)));
+if(profile.cv?.permissionConfirmed)await access('dist'+profile.cv.src);
 await access('dist/assets/videos/still-form.mp4');await access('dist/assets/videos/still-form.webm');
 console.log('PASS: locale metadata, canonical/hreflang/OG/schema/sitemap, real brand/media assets and preview contact/CV gates.');

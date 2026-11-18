@@ -9,7 +9,8 @@ try{
   for(const route of ['/','/ar/']) {
     await page.goto(origin+route);await page.waitForTimeout(1000);
     const lab=page.locator('#creative-lab');await lab.scrollIntoViewIfNeeded();
-    const expected={all:3,image:3,ad:3,product:2,property:1,concept:3};
+    const expected={all:3,product:2,property:1};
+    assert.equal(await lab.locator('[data-filter]').count(),3,'No redundant tabs for identical result sets');
     for(const [type,count] of Object.entries(expected)){
       const button=lab.locator(`[data-filter="${type}"]`);await button.click();
       assert.equal(await button.getAttribute('aria-pressed'),'true');assert.equal(await lab.locator('[data-project]:visible').count(),count);

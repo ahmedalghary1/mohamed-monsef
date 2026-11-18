@@ -34,7 +34,7 @@ try {
     await page.screenshot({path:`docs/redesign-${locale}-${engine}-hero.png`});
     // Every fragment links to a real target; no fake contact actions or private PDF.
     const badAnchors=await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(link=>!document.getElementById(link.hash.slice(1))).map(link=>link.hash));
-    assert.deepEqual(badAnchors,[]);assert.equal(await page.locator('a[href^="mailto:"],a[href$=".pdf"],a[href*="linkedin.com"]').count(),0);
+    assert.deepEqual(badAnchors,[]);assert.equal(await page.locator('a[href^="mailto:"]').count(),profile.contact.email?3:0);assert.equal(await page.locator('[data-cv-view],[data-cv-download]').count(),profile.cv?.permissionConfirmed?4:0);assert.equal(await page.locator('a[href*="linkedin.com"]').count(),profile.contact.linkedin?3:0);
     assert.equal(await page.locator('.approved-work [data-project]').count(),0);
     await page.setViewportSize({width:390,height:844});
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
@@ -76,7 +76,7 @@ try {
       if(item.isDirectory())await checkBundle(path);
       else if(/\.(html|js|css|json|txt)$/.test(path)){
         const text=await readFile(path,'utf8');
-        for(const forbidden of ['mohamedmonsef802',...(!profile.contact.whatsappPhone?['01026671903','201026671903']:[]),'Mohamed Monsef (2).pdf','source-assets','previous-deployed'])assert(!text.includes(forbidden),`Private data in ${path}`);
+        for(const forbidden of [...(!profile.contact.email?['mohamedmonsef802']:[]),...(!profile.contact.whatsappPhone?['01026671903','201026671903']:[]),'Mohamed Monsef (2).pdf','source-assets','previous-deployed'])assert(!text.includes(forbidden),`Private data in ${path}`);
       }
     }
   }

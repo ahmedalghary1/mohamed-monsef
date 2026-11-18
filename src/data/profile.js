@@ -11,7 +11,11 @@ export const profile = {
   // Populate only after explicit owner approval for public use. No private CV here.
   // contact: {whatsappPhone:'international digits',facebook:'https://www.facebook.com/...',
   // facebookPage:'https://www.facebook.com/...',email:'...',linkedin:'https://www.linkedin.com/...'}
-  // Owner explicitly approved this WhatsApp number for public buttons.
-  contact: { whatsappPhone: '201026671903' },
-  cv: null
+  // Public channels approved in the final polish brief; email verified in the CV.
+  contact: {
+    whatsappPhone: '201026671903',
+    facebook: 'https://www.facebook.com/mohamed.monsef.71216',
+    email: 'mohamedmonsef802@gmail.com'
+  },
+  cv: { src: '/assets/documents/mohamed-monsef-cv.pdf', permissionConfirmed: true }
 };

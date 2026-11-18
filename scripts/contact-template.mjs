@@ -17,4 +17,8 @@ export function contactChannels(config,lang){
  return channels;
 }
 export const renderContactRows=channels=>channels.map(c=>`<a class="contact-channel" data-channel="${c.type}" href="${esc(c.url)}"${c.type!=='email'?' target="_blank" rel="noopener noreferrer"':''}>${socialIcon(c.type)}<span>${esc(c.label)}</span><span aria-hidden="true">↗</span></a>`).join('');
+export function renderCvActions(src,lang){
+ if(!src)return '';
+ return `<div class="cv-actions"><a class="text-link" data-cv-view href="${esc(src)}" target="_blank" rel="noopener noreferrer">${lang==='ar'?'عرض السيرة الذاتية':'View CV'} <span aria-hidden="true">↗</span></a><a class="text-link" data-cv-download href="${esc(src)}" download="Mohamed-Monsef-CV.pdf">${lang==='ar'?'تحميل السيرة الذاتية':'Download CV'} <span aria-hidden="true">↓</span></a></div>`;
+}
 export function renderFloating(channels,lang){const c=channels.find(c=>c.type==='whatsapp');return c?`<a class="floating-whatsapp" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer" aria-label="${labels[lang].chat}">${socialIcon('whatsapp')}<span>${labels[lang].chat}</span></a>`:'';}

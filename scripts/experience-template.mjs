@@ -1,3 +1,4 @@
+import { sectionLabel } from '../src/data/sections.js';
 import { workflow } from '../src/data/workflow.js';
 import { concepts } from '../src/data/concepts.js';
 import { content } from '../src/data/content.js';
@@ -24,7 +25,7 @@ export function renderExpertise(lang) {
 }
 export function renderStory(lang) {
  const c=workflow[lang];
- return `<section id="story" class="section workflow-section" data-workflow><div class="container">${heading(c.label,c.title)}<div class="workflow-layout"><div class="workflow-visual"><svg viewBox="0 0 600 340" fill="none" aria-hidden="true"><path class="workflow-connection" d="M100 85H300H500V255H300H100V85"/><path class="workflow-return" d="M85 255H45V45H555V295H100"/>${[[100,85],[300,85],[500,85],[500,255],[300,255],[100,255]].map(([x,y],i)=>`<g data-stage-node="${i}"><circle cx="${x}" cy="${y}" r="32"/><text x="${x}" y="${y+6}" text-anchor="middle">0${i+1}</text></g>`).join('')}</svg><div class="workflow-caption" role="status" aria-live="polite"><h3 data-stage-title>${esc(c.stages[0][0])}</h3><p data-stage-description>${esc(c.stages[0][1])}</p></div><p class="workflow-loop">&#8635; ${esc(c.loop)}</p></div><ol class="workflow-stages">${c.stages.map((stage,i)=>`<li><button type="button" disabled data-stage="${i}" aria-pressed="${i===0}"><span class="step-number">0${i+1}</span><strong>${esc(stage[0])}</strong><span>${esc(stage[1])}</span></button></li>`).join('')}</ol></div></div></section>`;
+ return `<section id="story" class="section workflow-section" data-workflow><div class="container">${heading(sectionLabel('story',c.label),c.title)}<div class="workflow-layout"><div class="workflow-visual"><svg viewBox="0 0 600 340" fill="none" aria-hidden="true"><path class="workflow-connection" d="M100 85H300H500V255H300H100V85"/><path class="workflow-return" d="M85 255H45V45H555V295H100"/>${[[100,85],[300,85],[500,85],[500,255],[300,255],[100,255]].map(([x,y],i)=>`<g data-stage-node="${i}"><circle cx="${x}" cy="${y}" r="32"/><text x="${x}" y="${y+6}" text-anchor="middle">0${i+1}</text></g>`).join('')}</svg><div class="workflow-caption" role="status" aria-live="polite"><h3 data-stage-title>${esc(c.stages[0][0])}</h3><p data-stage-description>${esc(c.stages[0][1])}</p></div><p class="workflow-loop">&#8635; ${esc(c.loop)}</p></div><ol class="workflow-stages">${c.stages.map((stage,i)=>`<li><button type="button" disabled data-stage="${i}" aria-pressed="${i===0}"><span class="step-number">0${i+1}</span><strong>${esc(stage[0])}</strong><span>${esc(stage[1])}</span></button></li>`).join('')}</ol></div></div></section>`;
 }
 export function mediaStatus(c) {
   return `<p class="media-status" data-media-status role="status" data-loading="${esc(c.mediaLoading)}" data-error="${esc(c.mediaError)}" data-timeout="${esc(c.mediaTimeout)}" hidden></p>`;
@@ -34,9 +35,18 @@ export function dialogNavigation(c) {
 }
 export function renderLab(lang, asset) {
   const c = content[lang];
+  // Omit empty categories and categories that produce the same results as
+  // another filter (including All). Three studies should not need six tabs.
+  const groups = new Set([concepts.map(project=>project.id).join('|')]);
+  const filters = Object.entries(c.filters).filter(([id])=>{
+    if(id==='all')return true;
+    const group=concepts.filter(project=>project.categories.includes(id)).map(project=>project.id).join('|');
+    if(!group||groups.has(group))return false;
+    groups.add(group);return true;
+  });
   return `<section id="creative-lab" class="section concept-lab container" data-gallery>
-    <div class="lab-heading">${heading(c.labLabel,c.labTitle,c.labIntro)}<p class="concept-disclosure">${esc(c.disclosure)}</p></div>
-    <div class="gallery-toolbar"><div class="filters" hidden>${Object.entries(c.filters).filter(([id])=>id==='all'||concepts.some(p=>p.categories.includes(id))).map(([id,label]) => `<button type="button" data-filter="${id}" aria-pressed="${id==='all'}">${esc(label)}</button>`).join('')}</div><p class="result-count" data-results aria-live="polite" data-result-label="${esc(c.results)}" hidden></p></div>
+    <div class="lab-heading">${heading(sectionLabel('creative',c.labLabel),c.labTitle,c.labIntro)}<p class="concept-disclosure">${esc(c.disclosure)}</p></div>
+    <div class="gallery-toolbar"><div class="filters" hidden>${filters.map(([id,label]) => `<button type="button" data-filter="${id}" aria-pressed="${id==='all'}">${esc(id==='all'?c.labAll:label)}</button>`).join('')}</div><p class="result-count" data-results aria-live="polite" data-result-label="${esc(c.results)}" hidden></p></div>
     <div class="concept-gallery">${concepts.map((p,i) => `<article class="concept-item" data-project data-type="${p.categories.join(' ')}">
       <a class="concept-cover" data-open-project="concept-${p.id}" href="${asset('/assets/images/concepts/'+p.image+'.webp')}"><img src="${asset('/assets/images/concepts/'+p.image+'.webp')}" srcset="${asset('/assets/images/concepts/'+p.image+'-640.webp')} 640w, ${asset('/assets/images/concepts/'+p.image+'.webp')} 1280w" sizes="(max-width: 600px) 92vw, (max-width: 1000px) 46vw, ${i===0?'55vw':'35vw'}" alt="${esc(p.summary[lang])}" width="1280" height="853" loading="lazy"><span class="image-index" aria-hidden="true">0${i+1}</span><span class="concept-open">${esc(c.view)} <span aria-hidden="true">↗</span></span></a>
       <div class="concept-meta"><div><p class="eyebrow">${esc(p.category[lang])}</p><h3>${esc(p.title[lang])}</h3></div><span aria-hidden="true">↗</span></div><p class="concept-notice">${esc(c.notice)}</p>
@@ -46,7 +56,7 @@ export function renderLab(lang, asset) {
 }
 export function renderMotion(lang, asset) {
   const c=content[lang];
-  return `<section id="ai-motion" class="section motion-section" data-gallery><div class="container motion-layout"><div class="motion-copy">${heading(c.motionLabel,c.motionTitle,c.motionIntro)}<p class="motion-note">${esc(c.motionNote)}</p></div><div class="motion-feature"><a class="motion-poster" data-open-project="motion-study" href="${asset('/assets/videos/still-form.mp4')}"><img src="${asset('/assets/images/concepts/bottle.webp')}" srcset="${asset('/assets/images/concepts/bottle-640.webp')} 640w, ${asset('/assets/images/concepts/bottle.webp')} 1280w" sizes="(max-width: 760px) 92vw, 60vw" width="1280" height="853" loading="lazy" alt="${esc(c.motionCaption)}"><span class="play-control"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg><span>${esc(c.watch)}</span></span><span class="motion-duration" aria-hidden="true">00:06</span></a><div class="motion-caption"><p>${esc(c.motionCaption)}</p><span>${esc(c.motionType)}</span></div></div></div>
+  return `<section id="ai-motion" class="section motion-section" data-gallery><div class="container motion-layout"><div class="motion-copy">${heading(sectionLabel('motion',c.motionLabel),c.motionTitle,c.motionIntro)}<p class="motion-note">${esc(c.motionNote)}</p></div><div class="motion-feature"><a class="motion-poster" data-open-project="motion-study" href="${asset('/assets/videos/still-form.mp4')}"><img src="${asset('/assets/images/concepts/bottle.webp')}" srcset="${asset('/assets/images/concepts/bottle-640.webp')} 640w, ${asset('/assets/images/concepts/bottle.webp')} 1280w" sizes="(max-width: 760px) 92vw, 60vw" width="1280" height="853" loading="lazy" alt="${esc(c.motionCaption)}"><span class="play-control"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg><span>${esc(c.watch)}</span></span><span class="motion-duration" aria-hidden="true">00:06</span></a><div class="motion-caption"><p>${esc(c.motionCaption)}</p><span>${esc(c.motionType)}</span></div></div></div>
     <dialog class="project-dialog motion-dialog" data-dialog="motion-study" aria-labelledby="motion-title" data-lenis-prevent><button class="dialog-close" data-close type="button" autofocus>${esc(c.close)} ×</button><p class="eyebrow">${esc(c.motionType)}</p><h2 id="motion-title">${esc(c.motionCaption)}</h2><p>${esc(c.motionNote)}</p>${mediaStatus(c)}<video controls playsinline preload="none" width="960" height="640" poster="${asset('/assets/images/concepts/bottle.webp')}" aria-label="${esc(c.watch)}"><source src="${asset('/assets/videos/still-form.mp4')}" type="video/mp4"><source src="${asset('/assets/videos/still-form.webm')}" type="video/webm"></video><a class="text-link" href="${asset('/assets/videos/still-form.mp4')}">${esc(c.openMedia)} ↗</a></dialog>
   </section>`;
 }

@@ -15,6 +15,17 @@
 .enquiry-section legend{margin-block-end:16px;font-weight:600}
 .enquiry-choice{display:flex;align-items:center;gap:12px;min-height:44px}
 .enquiry-choice input{width:20px;height:20px;accent-color:var(--action)}
+.enquiry-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.enquiry-choice{position:relative;display:grid;grid-template-columns:20px 24px minmax(0,1fr);gap:12px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;transition:border-color .2s,background .2s}
+.enquiry-choice svg{width:24px;height:24px;color:var(--action)}
+.enquiry-choice:has(:checked){border-color:var(--action);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--action)}
+.enquiry-choice:has(:focus-visible){outline:3px solid var(--action);outline-offset:3px}
+.cv-actions{display:flex;flex-wrap:wrap;gap:12px 24px;margin-block-start:24px}
+.cv-actions a{display:inline-flex;align-items:center;gap:12px;min-height:44px}
+.contact .cv-actions{margin-block-start:12px}
+.contact .cv-actions a{color:var(--brand)}
+.hero .hero-copy>.eyebrow{font-size:11px;line-height:1.8;max-width:60ch}
+html[lang=ar] .hero .hero-copy>.eyebrow{font-size:14px;letter-spacing:normal}
 .enquiry-selects{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-block:24px}
 .enquiry-section :is(select,textarea){display:block;width:100%;min-width:0;border:1px solid var(--action);border-radius:8px;padding:12px;background:var(--surface);color:var(--ink);font:16px/1.6 var(--body);margin-block-start:8px}
 .enquiry-section textarea{resize:vertical}
@@ -37,3 +48,4 @@
 .not-found a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:underline}
 html[lang=ar] .hero .hero-copy h1{font-size:clamp(42px,4.8vw,68px);line-height:1.4}
 @media(max-width:760px){.hero .hero-layout{grid-template-columns:1fr;gap:24px;padding-block-start:36px}.hero .hero-copy h1{font-size:clamp(38px,9vw,52px)}html[lang=ar] .hero .hero-copy h1{font-size:clamp(32px,7.4vw,48px)}.hero .hero-portrait{width:min(100%,460px);justify-self:center}.enquiry-section form{grid-template-columns:1fr;gap:32px}.enquiry-selects{grid-template-columns:1fr}.enquiry-actions{padding-inline-end:48px}}
+@media(max-width:430px){.enquiry-choices{grid-template-columns:1fr}.hero .hero-copy>.eyebrow{font-size:10px}html[lang=ar] .hero .hero-copy>.eyebrow{font-size:13px}}
