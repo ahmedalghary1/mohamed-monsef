@@ -7,13 +7,13 @@ export const content = {
     eyebrow: 'STRATEGY MEETS CREATIVE', hello: 'Hi, I’m Mohamed Monsef',
     headline: ['Data-driven', 'strategy.', 'AI-powered', 'creativity.'],
     description: 'I combine performance marketing, audience insights, and AI-powered creative production to build advertising experiences with a clear strategic purpose.',
-    explore: 'Explore my work', talk: 'Let’s talk', scroll: 'A closer look',
+    explore: 'Explore selected work', talk: 'Let’s talk', scroll: 'A closer look',
     portraitAlt: 'Mohamed Monsef smiling with his arms crossed, wearing a light shirt.',
     portraitLabel: 'THE PERSON BEHIND THE STRATEGY', portraitNote: 'Analytical thinking. Creative execution.',
     portraitTags: ['Performance media buying', 'AI creative production'],
-    highlights: [['2+', 'Years of experience'], ['Meta & Google', 'Advertising platforms'], ['Images & video', 'AI creative production']],
+    highlights: [['Performance', 'Marketing strategy'], ['Meta & Google', 'Advertising platforms'], ['Images & video', 'AI creative production']],
     expertise: ['Meta Ads', 'Google Ads', 'Google Analytics', 'Audience research', 'Creative testing', 'AI image creation', 'AI video creation'],
-    workLabel: '01 / PERFORMANCE MARKETING', workTitle: 'Strategy backed\nby insights.',
+    workLabel: '02 / PERFORMANCE MARKETING', workTitle: 'Strategy backed\nby insights.',
     workIntro: 'Different sectors. Different audiences. The same focus on understanding what makes the message matter.',
     industryNote: 'Industry experience, rather than published campaign case studies. Client assets and results are shared only with permission.',
     sectors: [
@@ -21,7 +21,7 @@ export const content = {
       { name: 'Retail', title: 'Make the product.\nMake the connection.', description: 'Creative A/B testing and ongoing campaign optimization, with attention to audience response and cost per result.', tags: ['Creative testing', 'Campaign optimization'], icon: 'shopping-bag' },
       { name: 'Dates & agri-food exports', title: 'Products with a story.\nMarkets with potential.', description: 'Media planning and audience research shaped around product positioning and business objectives in food and export markets.', tags: ['Media planning', 'Product positioning'], icon: 'sprout' }
     ],
-    labLabel: '02 / AI CREATIVE LAB', labTitle: 'Ideas made visible.',
+    labLabel: '01 / AI CREATIVE LAB', labTitle: 'Ideas made visible.',
     labIntro: 'AI-powered visual concepts built around products, audiences, and advertising objectives.',
     disclosure: 'Website-generated illustrations. Created by the coding assistant to explore visual directions; these are not Mohamed’s completed projects or client work.',
     notice: 'Website-generated illustration', concept: 'Concept study', view: 'Explore concept', close: 'Close project', previous: 'Previous project', next: 'Next project',
@@ -77,7 +77,7 @@ export const content = {
     portraitTags: ['شراء إعلانات الأداء', 'إنتاج إبداعي بالذكاء الاصطناعي'],
     highlights: [['2+', 'سنوات من الخبرة'], ['Meta وGoogle', 'منصات إعلانية'], ['صور وفيديو', 'إنتاج بالذكاء الاصطناعي']],
     expertise: ['إعلانات Meta', 'إعلانات Google', 'Google Analytics', 'دراسة الجمهور', 'اختبار الأفكار', 'إنتاج صور بالذكاء الاصطناعي', 'إنتاج فيديو بالذكاء الاصطناعي'],
-    workLabel: '01 / التسويق القائم على الأداء', workTitle: 'استراتيجيات مبنية\nعلى فهم الجمهور.',
+    workLabel: '02 / التسويق القائم على الأداء', workTitle: 'استراتيجيات مبنية\nعلى فهم الجمهور.',
     workIntro: 'قطاعات مختلفة، وجمهور مختلف. والاهتمام نفسه بفهم ما يجعل الرسالة مؤثرة.',
     industryNote: 'خبرات في قطاعات العمل، وليست دراسات حالة منشورة. لا تُنشر مواد العملاء أو نتائج حملاتهم إلا بإذن.',
     sectors: [
@@ -85,7 +85,7 @@ export const content = {
       { name: 'تجارة التجزئة', title: 'منتج يستحق الاهتمام.\nورسالة تصنع الصلة.', description: 'اختبارات A/B للمحتوى وتحسين مستمر للحملات، مع الاهتمام باستجابة الجمهور وتكلفة النتيجة.', tags: ['اختبار المحتوى', 'تحسين الحملات'], icon: 'shopping-bag' },
       { name: 'التمور والصادرات الغذائية والزراعية', title: 'منتجات لها حكاية.\nوأسواق تحمل فرصًا.', description: 'تخطيط إعلامي ودراسة للجمهور ينطلقان من تموضع المنتج وأهداف النشاط في أسواق الغذاء والتصدير.', tags: ['التخطيط الإعلامي', 'تموضع المنتج'], icon: 'sprout' }
     ],
-    labLabel: '02 / مختبر الإبداع بالذكاء الاصطناعي', labTitle: 'أفكار تتحول إلى إبداع بصري.',
+    labLabel: '01 / مختبر الإبداع بالذكاء الاصطناعي', labTitle: 'أفكار تتحول إلى إبداع بصري.',
     labIntro: 'مفاهيم بصرية بالذكاء الاصطناعي تنطلق من المنتجات والجمهور والأهداف الإعلانية.',
     disclosure: 'صور توضيحية أُنشئت لهذا الموقع بواسطة مساعد البرمجة لاستكشاف توجهات بصرية؛ وليست مشروعات نفّذها محمد أو أعمالًا لعملاء.',
     notice: 'صورة توضيحية مولّدة للموقع', concept: 'دراسة إبداعية', view: 'استكشف الفكرة', close: 'إغلاق المشروع', previous: 'المشروع السابق', next: 'المشروع التالي',

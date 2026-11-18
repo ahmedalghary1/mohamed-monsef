@@ -16,6 +16,7 @@ export function initNavigation() {
     nav.toggleAttribute('data-collapsed', small.matches && !open);
     nav.toggleAttribute('data-drawer', open);
     menuHeading.hidden = !open;
+    nav.querySelector('.mobile-menu-extras').hidden = !open;
     backdrop.hidden = !open;
     document.body.toggleAttribute('data-menu-open', open);
     background.forEach((element, index) => { element.inert = open || previousInert[index]; });
@@ -44,13 +45,13 @@ export function initNavigation() {
     if (!open) return;
     if (event.key === 'Escape') { event.preventDefault(); setOpen(false, true); }
     if (event.key === 'Tab') {
-      const focusable = [...nav.querySelectorAll('a, button')];
+      const focusable = [...nav.querySelectorAll('a, button')].filter(element=>element.getClientRects().length);
       const first = focusable[0], last = focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   }, options);
-  document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => {
+  document.querySelectorAll('[data-language], [data-language-menu]').forEach(link => link.addEventListener('click', () => {
     link.hash = document.getElementById(location.hash.slice(1)) ? location.hash : '';
     try { localStorage.setItem('portfolio-language', link.lang); } catch { /* Storage is optional. */ }
   }, options));
@@ -59,7 +60,7 @@ export function initNavigation() {
   const headerObserver = new IntersectionObserver(([entry]) => header.toggleAttribute('data-scrolled', !entry.isIntersecting), { threshold: .95 });
   headerObserver.observe(document.getElementById('home'));
   const links = [...nav.querySelectorAll('[data-nav]')];
-  const sectionMap = new Map([['creative-lab', 'work'], ['ai-motion', 'work'], ['story', 'services']]);
+  const sectionMap = new Map([['creative-lab', 'work'], ['campaign-experience', 'work'], ['ai-motion', 'work'], ['story', 'services']]);
   const observer = new IntersectionObserver(entries => {
     const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top-b.boundingClientRect.top);
     if (!visible.length) return;

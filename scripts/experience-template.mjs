@@ -1,3 +1,4 @@
+import { workflow } from '../src/data/workflow.js';
 import { concepts } from '../src/data/concepts.js';
 import { content } from '../src/data/content.js';
 import { readFileSync } from 'node:fs';
@@ -22,8 +23,8 @@ export function renderExpertise(lang) {
   return `<div class="expertise-strip"><ul class="container">${content[lang].expertise.map(s => `<li><bdi>${esc(s)}</bdi></li>`).join('')}</ul></div>`;
 }
 export function renderStory(lang) {
-  const c = content[lang];
-  return `<section id="story" class="section process-section"><div class="container">${heading(c.processLabel,c.processTitle)}<div class="process-track" aria-hidden="true"><span data-process-progress></span></div><ol class="process-list">${c.process.map((step,i) => `<li data-process-step><span class="step-number">0${i+1}</span><h3>${esc(step[0])}</h3><p>${esc(step[1])}</p></li>`).join('')}</ol></div></section>`;
+ const c=workflow[lang];
+ return `<section id="story" class="section workflow-section" data-workflow><div class="container">${heading(c.label,c.title)}<div class="workflow-layout"><div class="workflow-visual"><svg viewBox="0 0 600 340" fill="none" aria-hidden="true"><path class="workflow-connection" d="M100 85H300H500V255H300H100V85"/><path class="workflow-return" d="M85 255H45V45H555V295H100"/>${[[100,85],[300,85],[500,85],[500,255],[300,255],[100,255]].map(([x,y],i)=>`<g data-stage-node="${i}"><circle cx="${x}" cy="${y}" r="32"/><text x="${x}" y="${y+6}" text-anchor="middle">0${i+1}</text></g>`).join('')}</svg><div class="workflow-caption" role="status" aria-live="polite"><h3 data-stage-title>${esc(c.stages[0][0])}</h3><p data-stage-description>${esc(c.stages[0][1])}</p></div><p class="workflow-loop">? ${esc(c.loop)}</p></div><ol class="workflow-stages">${c.stages.map((stage,i)=>`<li><button type="button" disabled data-stage="${i}" aria-pressed="${i===0}"><span class="step-number">0${i+1}</span><strong>${esc(stage[0])}</strong><span>${esc(stage[1])}</span></button></li>`).join('')}</ol></div></div></section>`;
 }
 export function mediaStatus(c) {
   return `<p class="media-status" data-media-status role="status" data-loading="${esc(c.mediaLoading)}" data-error="${esc(c.mediaError)}" data-timeout="${esc(c.mediaTimeout)}" hidden></p>`;
@@ -35,7 +36,7 @@ export function renderLab(lang, asset) {
   const c = content[lang];
   return `<section id="creative-lab" class="section concept-lab container" data-gallery>
     <div class="lab-heading">${heading(c.labLabel,c.labTitle,c.labIntro)}<p class="concept-disclosure">${esc(c.disclosure)}</p></div>
-    <div class="gallery-toolbar"><div class="filters" hidden>${Object.entries(c.filters).map(([id,label]) => `<button type="button" data-filter="${id}" aria-pressed="${id==='all'}">${esc(label)}</button>`).join('')}</div><p class="result-count" data-results aria-live="polite" data-result-label="${esc(c.results)}" hidden></p></div>
+    <div class="gallery-toolbar"><div class="filters" hidden>${Object.entries(c.filters).filter(([id])=>id==='all'||concepts.some(p=>p.categories.includes(id))).map(([id,label]) => `<button type="button" data-filter="${id}" aria-pressed="${id==='all'}">${esc(label)}</button>`).join('')}</div><p class="result-count" data-results aria-live="polite" data-result-label="${esc(c.results)}" hidden></p></div>
     <div class="concept-gallery">${concepts.map((p,i) => `<article class="concept-item" data-project data-type="${p.categories.join(' ')}">
       <a class="concept-cover" data-open-project="concept-${p.id}" href="${asset('/assets/images/concepts/'+p.image+'.webp')}"><img src="${asset('/assets/images/concepts/'+p.image+'.webp')}" srcset="${asset('/assets/images/concepts/'+p.image+'-640.webp')} 640w, ${asset('/assets/images/concepts/'+p.image+'.webp')} 1280w" sizes="(max-width: 600px) 92vw, (max-width: 1000px) 46vw, ${i===0?'55vw':'35vw'}" alt="${esc(p.summary[lang])}" width="1280" height="853" loading="lazy"><span class="image-index" aria-hidden="true">0${i+1}</span><span class="concept-open">${esc(c.view)} <span aria-hidden="true">↗</span></span></a>
       <div class="concept-meta"><div><p class="eyebrow">${esc(p.category[lang])}</p><h3>${esc(p.title[lang])}</h3></div><span aria-hidden="true">↗</span></div><p class="concept-notice">${esc(c.notice)}</p>

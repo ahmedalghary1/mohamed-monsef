@@ -34,7 +34,7 @@ try {
     // Every fragment links to a real target; no fake contact actions or private PDF.
     const badAnchors=await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(link=>!document.getElementById(link.hash.slice(1))).map(link=>link.hash));
     assert.deepEqual(badAnchors,[]);assert.equal(await page.locator('a[href^="mailto:"],a[href$=".pdf"],a[href*="wa.me"],a[href*="linkedin.com"]').count(),0);
-    assert.equal(await page.locator('#work [data-project]').count(),0);
+    assert.equal(await page.locator('.approved-work [data-project]').count(),0);
     await page.setViewportSize({width:390,height:844});
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
     await page.screenshot({path:`docs/redesign-${locale}-${engine}-mobile.png`,fullPage:true});

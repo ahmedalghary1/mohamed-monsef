@@ -1,8 +1,9 @@
 import { initNavigation } from './navigation.js';
 import { initGallery } from './gallery.js';
+import { initWorkflow } from './workflow.js';
 import { initExperience } from './experience.js';
 
-const cleanups = [initNavigation(), initGallery(), initExperience()];
+const cleanups = [initNavigation(), initGallery(), initExperience(), initWorkflow()];
 let active = true;
 let motionCleanup = () => {}, generation = 0;
 const enhancedMotion = matchMedia('(prefers-reduced-motion: no-preference) and (pointer: fine) and (min-width: 761px)');

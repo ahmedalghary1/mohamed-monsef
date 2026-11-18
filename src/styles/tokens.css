@@ -1,5 +1,5 @@
 :root {
-  --bg: #F8FAFC;
+  --bg: #F5F5F0;
   --surface: #FFFFFF;
   --ink: #0F172A;
   --deep: #080F1C;
@@ -8,17 +8,21 @@
   --text-secondary: #475569;
   --muted: #94A3B8;
   --action: #0E7490;
-  --brand: #22D3EE;
+  --brand: #67E8F9;
   --action-hover: #0891B2;
   --line: #E2E8F0;
-  --dark-line: #334155;
+  --dark-line: #263244;
   --accent-soft: #E8F5F7;
+  --secondary-dark: #111D2E;
+  --secondary-accent: #22D3EE;
+  --whatsapp: #25D366;
+  --facebook: #1877F2;
   --positive: #15803D;
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
   --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
   --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px;
-  --container: 1320px;
+  --container: 1360px;
   --gutter: clamp(20px, 4.5vw, 72px);
   --section-space: clamp(64px, 8.5vw, 136px);
   --display: 'Space Grotesk', system-ui, sans-serif;
