@@ -44,6 +44,8 @@ README.md
 
 ## 5. Design system (must be followed)
 
+The latest premium refinement brief takes precedence for tokens and composition: warm `#F5F5F0` canvas, ice cyan `#67E8F9` on dark, secondary dark `#111D2E`, dark border `#263244`, and 1360px container. Keep the approved filled MM identity. Present clearly attributed creative explorations before industry experience; never relabel illustrative assets as the owner's work. The signature workflow now has six stages and services use native details/summary. Contact settings remain in `profile.contact`; render floating WhatsApp and Facebook channels only for valid owner-approved public configuration. Missing values stay omitted.
+
 The owner’s November 2026 redesign brief supersedes the original light-only direction, abstract hero and original palette/type choices. The active direction is Creative Performance: a navy portrait-led hero, light editorial work/services/about sections, a dark motion study and a navy contact/footer. Use the real supplied portrait unchanged in an editorial frame; never generate or reconstruct the owner’s face. Source photo stays in `source-assets/portrait/`; only approved WebP derivatives are public.
 
 | Token | Value | Purpose |

@@ -9,6 +9,8 @@ export const profile = {
     { date: 'June 2024–2025', title: { en: 'Media Buyer', ar: 'متخصص شراء إعلانات' }, employer: { en: 'Capital MAS', ar: 'Capital MAS' }, summary: { en: 'Meta campaigns, audience optimization and collaboration with creative and sales teams. Performance tracking with Meta Ads Manager and Google Analytics.', ar: 'إدارة حملات Meta وتحسين الاستهداف والتعاون مع فرق الإبداع والمبيعات، وتتبع الأداء باستخدام Meta Ads Manager وGoogle Analytics.' } }
   ],
   // Populate only after explicit owner approval for public use. No private CV here.
+  // contact: {whatsappPhone:'international digits',facebook:'https://www.facebook.com/...',
+  // facebookPage:'https://www.facebook.com/...',email:'...',linkedin:'https://www.linkedin.com/...'}
   contact: {},
   cv: null
 };

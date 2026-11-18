@@ -12,8 +12,8 @@
 .concept-lab .concept-item:nth-child(2) .concept-cover img{aspect-ratio:4/5}
 .concept-lab .concept-item:nth-child(3){padding-top:96px}
 .concept-lab .concept-item:nth-child(3) .concept-cover img{aspect-ratio:1}
-.concept-lab .concept-gallery:has([hidden]) .concept-item{grid-column:auto;padding-top:0}
-.concept-lab .concept-gallery:has([hidden]) .concept-cover img{aspect-ratio:4/3}
+.concept-lab .concept-gallery:has([data-project][hidden]) .concept-item{grid-column:auto;padding-top:0}
+.concept-lab .concept-gallery:has([data-project][hidden]) .concept-cover img{aspect-ratio:4/3}
 .concept-lab .concept-notice,.concept-lab .concept-meta .eyebrow{font-size:12px}
 .service-accordion{border-block-start:1px solid var(--line)}
 .service-accordion:last-child{border-block-end:1px solid var(--line)}
@@ -79,3 +79,6 @@ html[lang=ar] .footer-wordmark{letter-spacing:normal}
  .footer-socials{display:grid;gap:8px}.footer-socials .contact-channel{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.workflow-visual{position:static}}
+
+#work .concept-lab{padding-block-end:64px}
+.section.work-section{padding-block-start:64px}

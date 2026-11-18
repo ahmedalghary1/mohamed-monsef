@@ -76,6 +76,24 @@ The offline renderer can regenerate either file against a running server: set `A
 
 ## Approved contact, CV and domain
 
+The premium refinement adds build-time contact rows in the main contact section, footer and mobile drawer, plus a locale-aware floating WhatsApp component. **The only public contact source is `src/data/profile.js` → `profile.contact`.** After explicit public approval, configure any of these fields; omit unavailable ones:
+
+```js
+contact: {
+  whatsappPhone: '', // international digits only, country code, no +/spaces/leading zero
+  facebook: '',      // full https://www.facebook.com/ profile URL
+  facebookPage: '',  // independent verified page URL, optional
+  email: '',
+  linkedin: ''       // full HTTPS LinkedIn profile URL
+}
+```
+
+`scripts/contact-template.mjs` validates destinations, encodes the prefilled WhatsApp message for EN/AR, and renders shared channel rows. A previously configured `contact.whatsapp` wa.me URL remains supported; `whatsappPhone` takes precedence. Invalid/missing phone, Facebook or LinkedIn values are omitted. No test opens these destinations or sends a message. The floating control uses safe-area spacing, logical RTL placement, keyboard tooltip/focus, and hides while menu/dialog overlays are open. Facebook has independent profile/page settings; no social SDK or tracking pixel is loaded. The current configuration is empty, so public social/contact controls remain hidden.
+
+`src/data/workflow.js` holds the new six-stage bilingual Strategy to Creative section. `src/js/workflow.js` owns its selection/observer cleanup. Services use native details/summary with descriptions accessible without JavaScript. Warm/ice-cyan tokens, workflow, service and social component styles are in `tokens.css` and `refinement.css`. Genuine approved cases remain separate from website-generated illustrative studies. The creative gallery now leads the page, followed by sector experience.
+
+Additional checks: `node tests/refinement.mjs` covers workflow selection, accordion behavior, contact URL encoding/validation, missing-data gates, overlay visibility and six desktop/tablet/mobile screenshots. Set `REPORT_PREFIX=refinement` for `npm run test:performance` to preserve earlier lab reports.
+
 No endpoint or public contact approval is configured. The contact section is a truthful preview, with no form or dead contact controls. After explicit owner approval, set `profile.contact.email`, `profile.contact.whatsapp` (a verified `https://wa.me/...` URL) and/or `profile.contact.linkedin` (`https://www.linkedin.com/...`). These public configuration values are themselves approval assertions; never copy them from a CV automatically. Email opens the visitor’s mail app and does not send/store a message. No analytics or collection is enabled.
 
 For a CV, obtain approval for a redacted public PDF, put that copy in `public/assets/documents/`, then configure `profile.cv = {src: '/assets/documents/approved-cv.pdf', permissionConfirmed: true}`. The private root CV must never be copied into `public/` or uploaded.
