@@ -9,6 +9,7 @@ function initGalleryRoot(root) {
   const filters = root.querySelector('.filters'), status = root.querySelector('[data-results]');
   const mediaTimers = new Map();
   let sessionOpener = null;
+  let returnHash = '';
   const notifyOverlay = () => {
     document.body.toggleAttribute('data-dialog-open', Boolean(document.querySelector('dialog[open]')));
     document.dispatchEvent(new Event('portfolio:overlay'));
@@ -24,10 +25,11 @@ function initGalleryRoot(root) {
   }
   function showDialog(dialog, opener) {
     if (!dialog) return;
-    if (opener) sessionOpener = opener;
+    if (opener) {sessionOpener = opener;if(!location.hash.startsWith('#project='))returnHash=location.hash;}
     document.querySelectorAll('video').forEach(video => video.pause());
     dialogs.forEach(other => { if (other.open) other.close(); });
     dialog.showModal(); dialog.scrollTop = 0; updateMedia(dialog); notifyOverlay();
+    history.replaceState(null,'',location.pathname+location.search+'#project='+encodeURIComponent(dialog.dataset.dialog));
   }
   function navigate(dialog, direction) {
     const available = dialogs.filter(candidate => {
@@ -64,7 +66,10 @@ function initGalleryRoot(root) {
     dialog.addEventListener('close', () => {
       dialog.querySelectorAll('video').forEach(video=>{video.pause();clearTimeout(mediaTimers.get(video));mediaTimers.delete(video);});
       notifyOverlay();
-      if (!dialogs.some(other=>other.open) && sessionOpener?.isConnected) sessionOpener.focus({preventScroll:true});
+      if (!dialogs.some(other=>other.open)) {
+        if(location.hash==='#project='+encodeURIComponent(dialog.dataset.dialog))history.replaceState(null,'',location.pathname+location.search+returnHash);
+        if(sessionOpener?.isConnected)sessionOpener.focus({preventScroll:true});
+      }
     }, options);
     dialog.addEventListener('keydown', event => {
       if (event.target.closest('video')) return;
@@ -96,6 +101,8 @@ function initGalleryRoot(root) {
     });
     if (dialogs.length===1) dialog.querySelector('.dialog-navigation')?.setAttribute('hidden','');
   });
+  const openFromHash=()=>{if(!location.hash.startsWith('#project='))return;let id;try{id=decodeURIComponent(location.hash.slice(9));}catch{return;}const dialog=dialogs.find(d=>d.dataset.dialog===id);if(dialog&&!dialog.open){const opener=[...root.querySelectorAll('[data-open-project]')].find(a=>a.dataset.openProject===id);showDialog(dialog,opener);}};
+  window.addEventListener('hashchange',openFromHash,options);openFromHash();
   return () => {
     mediaTimers.forEach(timer=>clearTimeout(timer));mediaTimers.clear();
     controller.abort(); dialogs.forEach(dialog=>{dialog.querySelectorAll('video').forEach(video=>video.pause());if(dialog.open)dialog.close();});

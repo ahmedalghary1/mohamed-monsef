@@ -16,15 +16,23 @@ args = parser.parse_args()
 root = Path(__file__).resolve().parent.parent
 source = root / 'source-assets' / 'portrait'
 source.mkdir(parents=True, exist_ok=True)
-original = root / 'image.jpeg'
+original = next((path for path in [root/'image.png', source/'mohamed-updated.png', root/'image.jpeg', source/'mohamed-original.jpeg'] if path.exists()), None)
+if original is None:
+    raise FileNotFoundError('Supply an approved portrait in image.png or source-assets/portrait/')
 if not args.brand_only:
-    copy2(original, source / 'mohamed-original.jpeg')
+    preserved = source / ('mohamed-updated.png' if original.suffix.lower()=='.png' else 'mohamed-original.jpeg')
+    if original.resolve()!=preserved.resolve():
+        copy2(original, preserved)
 image = Image.open(original).convert('RGB')
 output = root / 'public' / 'assets' / 'images'
 output.mkdir(parents=True, exist_ok=True)
 if not args.brand_only:
+    output = output/'profile'
+    output.mkdir(parents=True,exist_ok=True)
     for size, name in [(960, 'mohamed-portrait.webp'), (640, 'mohamed-portrait-640.webp'), (480, 'mohamed-portrait-480.webp')]:
-        image.resize((size,size), Image.Resampling.LANCZOS).save(output/name, 'WEBP', quality=88, method=6)
+        resized=image.copy()
+        resized.thumbnail((size,size),Image.Resampling.LANCZOS)
+        resized.save(output/name, 'WEBP', quality=88, method=6)
 
 brand = root / 'public' / 'assets' / 'brand'
 geometry = json.loads((root/'src'/'data'/'brand.json').read_text(encoding='utf-8'))
@@ -59,8 +67,8 @@ if download.exists():
 font = lambda size: ImageFont.truetype(str(font_path),size)
 canvas.paste(logo_image(90,colors['brand']),(60,46),logo_image(90,colors['brand']))
 draw.text((64,155),'Mohamed Monsef',font=font(47),fill='#F8FAFC')
-draw.text((64,240),'Data-driven strategy.',font=font(43),fill='#F8FAFC')
-draw.text((64,300),'AI-powered creativity.',font=font(43),fill='#22D3EE')
+draw.text((64,240),'Smarter ads.',font=font(43),fill='#F8FAFC')
+draw.text((64,300),'Stronger creatives.',font=font(43),fill='#22D3EE')
 draw.line((64,440,640,440),fill='#334155',width=1)
 draw.text((64,475),'Performance Media Buyer',font=font(22),fill='#F8FAFC')
 draw.text((64,512),'& AI Creative Specialist',font=font(22),fill='#94A3B8')

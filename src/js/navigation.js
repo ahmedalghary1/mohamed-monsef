@@ -53,7 +53,7 @@ export function initNavigation() {
     }
   }, options);
   document.querySelectorAll('[data-language], [data-language-menu]').forEach(link => link.addEventListener('click', () => {
-    link.hash = document.getElementById(location.hash.slice(1)) ? location.hash : '';
+    link.hash = (document.getElementById(location.hash.slice(1))||location.hash.startsWith('#project=')) ? location.hash : '';
     try { localStorage.setItem('portfolio-language', link.lang); } catch { /* Storage is optional. */ }
   }, options));
 

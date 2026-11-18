@@ -1,9 +1,11 @@
+import { initEnquiry } from './enquiry.js';
+import { initComparisons } from './comparison.js';
 import { initNavigation } from './navigation.js';
 import { initGallery } from './gallery.js';
 import { initWorkflow } from './workflow.js';
 import { initExperience } from './experience.js';
 
-const cleanups = [initNavigation(), initGallery(), initExperience(), initWorkflow()];
+const cleanups = [initNavigation(), initGallery(), initExperience(), initWorkflow(), initEnquiry(), initComparisons()];
 let active = true;
 let motionCleanup = () => {}, generation = 0;
 const enhancedMotion = matchMedia('(prefers-reduced-motion: no-preference) and (pointer: fine) and (min-width: 761px)');

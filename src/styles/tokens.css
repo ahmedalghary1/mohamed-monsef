@@ -24,7 +24,7 @@
   --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px;
   --container: 1360px;
   --gutter: clamp(20px, 4.5vw, 72px);
-  --section-space: clamp(64px, 8.5vw, 136px);
+  --section-space: clamp(56px, 7.5vw, 120px);
   --display: 'Space Grotesk', system-ui, sans-serif;
   --body: Inter, system-ui, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
