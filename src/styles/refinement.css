@@ -82,3 +82,8 @@ html[lang=ar] .footer-wordmark{letter-spacing:normal}
 
 #work .concept-lab{padding-block-end:64px}
 .section.work-section{padding-block-start:64px}
+
+/* Leave room for the approved persistent chat action near contact/footer controls. */
+body[data-has-whatsapp] .contact-bottom{padding-inline-end:72px}
+body[data-has-whatsapp] .footer-bottom{padding-block-end:96px}
+@media(max-width:760px){body[data-has-whatsapp] .contact-bottom{padding-inline-end:56px}}

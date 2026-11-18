@@ -31,9 +31,10 @@ export function initNavigation() {
   backdrop.addEventListener('click', () => setOpen(false, true), options);
   small.addEventListener('change', () => setOpen(false), options);
   nav.addEventListener('click', event => {
-    const link = event.target.closest('a[href^="#"]');
+    const link = event.target.closest('a[href]');
     if (!link || !open) return;
     setOpen(false);
+    if(link.origin!==location.origin||link.pathname!==location.pathname||!link.hash)return;
     const target = document.getElementById(link.hash.slice(1));
     if (target) {
       target.setAttribute('tabindex', '-1');

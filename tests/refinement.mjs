@@ -1,3 +1,4 @@
+import { profile } from '../src/data/profile.js';
 import assert from 'node:assert/strict';
 import { contactChannels,renderFloating,renderContactRows } from '../scripts/contact-template.mjs';
 import { launchBrowser,origin,settleImages } from './helpers.mjs';
@@ -16,7 +17,7 @@ for(const lang of ['en','ar']){
  await page.goto(origin+(lang==='ar'?'/ar/':'/'));await page.locator('[data-stage="5"]').click();
  assert.equal(await page.locator('[data-stage="5"]').getAttribute('aria-pressed'),'true');
  assert.equal(await page.locator('[data-stage-node="5"]').getAttribute('data-active'),'');
- assert.equal(await page.locator('.floating-whatsapp,.contact-channel').count(),0);
+ const actual=contactChannels(profile.contact,lang);assert.equal(await page.locator('.contact-channel').count(),actual.length*3);assert.equal(await page.locator('.floating-whatsapp').count(),actual.some(c=>c.type==='whatsapp')?1:0);
  assert.equal(await page.locator('.service-accordion').count(),4);
  await page.locator('.service-accordion').nth(1).locator('summary').click();assert.notEqual(await page.locator('.service-accordion').nth(1).getAttribute('open'),null);
  for(const width of [1440,768,390]){

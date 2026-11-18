@@ -1,3 +1,4 @@
+import { profile } from '../src/data/profile.js';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -33,7 +34,7 @@ try {
     await page.screenshot({path:`docs/redesign-${locale}-${engine}-hero.png`});
     // Every fragment links to a real target; no fake contact actions or private PDF.
     const badAnchors=await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(link=>!document.getElementById(link.hash.slice(1))).map(link=>link.hash));
-    assert.deepEqual(badAnchors,[]);assert.equal(await page.locator('a[href^="mailto:"],a[href$=".pdf"],a[href*="wa.me"],a[href*="linkedin.com"]').count(),0);
+    assert.deepEqual(badAnchors,[]);assert.equal(await page.locator('a[href^="mailto:"],a[href$=".pdf"],a[href*="linkedin.com"]').count(),0);
     assert.equal(await page.locator('.approved-work [data-project]').count(),0);
     await page.setViewportSize({width:390,height:844});
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
@@ -43,7 +44,7 @@ try {
     assert.equal(await page.locator('#navigation').getAttribute('aria-modal'),'true');
     assert.equal(await page.locator('main').evaluate(element=>element.inert),true);
     assert.equal(await page.locator('body').evaluate(element=>getComputedStyle(element).overflow),'hidden');
-    await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#contact');
+    await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement===[...document.querySelectorAll('#navigation a,#navigation button')].filter(e=>e.getClientRects().length).at(-1)),true);
     await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.hasAttribute('data-menu-close')),true);
     await page.keyboard.press('Escape');assert.equal(await page.locator('#navigation').isVisible(),false);
     assert.equal(await page.evaluate(()=>document.activeElement.hasAttribute('data-menu-toggle')),true);
@@ -75,7 +76,7 @@ try {
       if(item.isDirectory())await checkBundle(path);
       else if(/\.(html|js|css|json|txt)$/.test(path)){
         const text=await readFile(path,'utf8');
-        for(const forbidden of ['mohamedmonsef802','01026671903','201026671903','Mohamed Monsef (2).pdf','source-assets','previous-deployed'])assert(!text.includes(forbidden),`Private data in ${path}`);
+        for(const forbidden of ['mohamedmonsef802',...(!profile.contact.whatsappPhone?['01026671903','201026671903']:[]),'Mohamed Monsef (2).pdf','source-assets','previous-deployed'])assert(!text.includes(forbidden),`Private data in ${path}`);
       }
     }
   }

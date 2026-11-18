@@ -1,4 +1,4 @@
-// Approved professional facts only. Personal contact details stay outside this module.
+// Approved public facts and contact channels only.
 export const profile = {
   name: 'Mohamed Monsef',
   localizedName: { en: 'Mohamed Monsef', ar: 'محمد منصف' },
@@ -11,6 +11,7 @@ export const profile = {
   // Populate only after explicit owner approval for public use. No private CV here.
   // contact: {whatsappPhone:'international digits',facebook:'https://www.facebook.com/...',
   // facebookPage:'https://www.facebook.com/...',email:'...',linkedin:'https://www.linkedin.com/...'}
-  contact: {},
+  // Owner explicitly approved this WhatsApp number for public buttons.
+  contact: { whatsappPhone: '201026671903' },
   cv: null
 };
