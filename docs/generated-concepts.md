@@ -17,4 +17,6 @@ Premium advertising still life concept, landscape 3:2. Rich glossy medjool dates
 
 ## Motion asset
 
+November 2026 redesign: `public/assets/videos/still-form.mp4` is an additional silent six-second H.264 encode, created with Chromium canvas + MediaRecorder by the same offline renderer. MP4 is served first, with the original VP9 WebM as fallback. Neither format is AI-generated video. The original WebM remains unchanged. Set `MOTION_FORMAT=mp4` or `webm` when regenerating, and `ASSET_ORIGIN` to the running server. The site visibly preserves the programmed-study attribution.
+
 `public/assets/videos/still-form.webm`: actual six-second, 960×640, silent VP9 video, made by `scripts/render-motion.mjs` using canvas + MediaRecorder in Chromium. It gently reframes the generated still and animates corner linework. It is a programmed motion study, explicitly labelled as such; it does not claim AI video generation or client authorship. Native controls; no autoplay; preload none; pauses on dialog close. Regenerate against `npm run dev` with `node scripts/render-motion.mjs` (`ASSET_ORIGIN` overrides origin).

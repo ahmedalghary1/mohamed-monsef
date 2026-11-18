@@ -44,22 +44,27 @@ README.md
 
 ## 5. Design system (must be followed)
 
+The owner’s November 2026 redesign brief supersedes the original light-only direction, abstract hero and original palette/type choices. The active direction is Creative Performance: a navy portrait-led hero, light editorial work/services/about sections, a dark motion study and a navy contact/footer. Use the real supplied portrait unchanged in an editorial frame; never generate or reconstruct the owner’s face. Source photo stays in `source-assets/portrait/`; only approved WebP derivatives are public.
+
 | Token | Value | Purpose |
 |---|---|---|
-| bg | #F7F8FA | canvas |
+| bg | #F8FAFC | canvas |
 | surface | #FFFFFF | content surfaces |
-| ink | #1E293B | primary type |
-| muted | #64748B | supporting type, verify contrast |
-| brand | #3B9AB2 | restrained aqua accent |
-| action | #23778B | accessible primary CTA, validate |
-| action-hover | #1B6577 | hover state |
+| ink | #0F172A | primary type |
+| deep | #080F1C | hero, motion and contact |
+| dark-surface | #172338 | dark supporting surfaces |
+| text-secondary | #475569 | supporting type on light |
+| muted | #94A3B8 | supporting type on dark |
+| brand | #22D3EE | cyan on dark |
+| action | #0E7490 | text and actions on light |
+| action-hover | #0891B2 | accent hover; validate foreground |
 | line | #E2E8F0 | decorative dividers |
 | accent-soft | #E8F5F7 | soft accent surfaces |
 | positive | #15803D | verified positive results only |
 
-Use a single `tokens.css` as source of truth. Spacing scale: 4/8/12/16/20/24/32/40/48/64/80/96px, container max 1280px, section space clamp(56px, 8vw, 120px), gutters clamp(16px, 4vw, 64px). Radii 8/16/24px, soft shadows only where hierarchy benefits. Grid desktop 12, tablet 8, mobile 4 as needed; no excessive card nesting. Typography: Manrope display, Inter body, IBM Plex Mono for limited data, IBM Plex Sans Arabic for AR. WOFF2 licensed assets if available; fall back cleanly. Fluid heading sizes, body 16–18px, natural Arabic letter spacing, controlled line lengths. Check all state contrasts instead of assuming a token passes everywhere.
+Use a single `tokens.css` as source of truth. Spacing scale: 4/8/12/16/20/24/32/40/48/64/80/96px, container max 1320px, section space clamp(64px, 8.5vw, 136px), gutters clamp(20px, 4.5vw, 72px). Radii 8/16/24px, soft shadows only where hierarchy benefits. Grid desktop 12, tablet 8, mobile 4 as needed; no excessive card nesting. Typography: Space Grotesk display, Inter body, system monospace for limited labels, IBM Plex Sans Arabic for AR. Self-host licensed WOFF2 assets and fall back cleanly. Fluid headings, readable body copy, natural Arabic letter spacing, controlled line lengths. Check all state contrasts instead of assuming a token passes everywhere.
 
-Art direction: light editorial portfolio, performance lab and creative technology. Keep the interface neutral to prioritize real visuals. Strong hierarchy, aligned margins and purposeful whitespace. Avoid neon, excessive glass, generic SaaS dashboards, every-section bento, random gradients, decorative metric widgets, custom cursor and motion for its own sake. Hero uses one abstract data-to-creative object, not fake identity photography. One dark CTA area may be used only if it strengthens page rhythm.
+Art direction: premium editorial, performance marketing and creative technology. Roughly 60% light, 30% dark and 10% accents. Strong hierarchy, aligned margins and purposeful whitespace. Avoid excessive glass, generic SaaS dashboards, every-section bento, random gradients, decorative metric widgets, custom cursor and motion for its own sake. The supplied portrait, custom MM monogram and clearly attributed concept images anchor the identity. Reference images are inspiration only and must not be published as portfolio work.
 
 Default order: header → hero → credibility → selected work / AI creative showcase (or truthful sector experience if empty) → services → process → about & experience → skills/training → contact → footer. Keep conversion paths easy to find. Primary CTA to work; secondary to contact. Every visible control must perform its stated action. If data or permission is missing, conditionally omit related controls; do not use dead links or fake success toasts.
 
@@ -67,7 +72,7 @@ Default order: header → hero → credibility → selected work / AI creative s
 
 - Mobile-first and responsive at 320–1920+ CSS px, desktop and touch, both languages. Use fluid grid, minmax(0,1fr), aspect-ratio and content-driven breakpoints. No horizontal overflow, fixed width body or content lost under overlays. Test 200% zoom/reflow. Aim for touch targets >=44px where possible.
 - Target WCAG 2.2 AA, not a claim of certification. Text contrast >=4.5:1 normal and >=3:1 large; necessary UI component boundaries and focus states per applicable criteria. Use skip link, landmarks, meaningful heading hierarchy, accessible names, keyboard operation, focus-visible and relevant alternative text. Do not use color alone. No positive tabindex.
-- Keep initial HTML visible. If JS fails, never leave text hidden by initial animation styles. Respect prefers-reduced-motion; skip nonessential motion for those users. Native touch/keyboard scrolling must work. No forced scroll lock, scroll snapping or global wheel cancellation.
+- Keep initial HTML visible. If JS fails, never leave text hidden by initial animation styles. Respect prefers-reduced-motion; skip nonessential motion for those users. Native touch/keyboard scrolling must work. Scroll lock is allowed only while a mobile drawer or modal is open, with restoration on close. No scroll snapping or global wheel cancellation.
 - HTML `lang`/`dir` correct, full AR and EN translations, logical CSS, use bdi for mixed-direction metric labels; use actual locale URLs for language switch. Do not rely only on localStorage for language content. Preserve URL hash when meaningful.
 - Prefer native anchor links, real buttons for actions, aria-current where appropriate. Mobile menu disclosure/dialog must support ESC, focus management and close on navigation. Work filters must preserve order, provide an accessible active state and communicate results. Dialogs need clear close, keyboard support, focus containment/restoration, mobile scroll support. Stop video on close and prevent concurrent audio. No autoplay audio.
 - Contact is static unless a real endpoint is commissioned. An optional mailto composer must say it opens the visitor's email app, not that it sends a message. Encode fields, validate, avoid logging or storing personal data. Do not turn on collection or tracking without authorization.
@@ -76,7 +81,7 @@ Default order: header → hero → credibility → selected work / AI creative s
 
 - GSAP/ScrollTrigger for lightweight entry animations and purposeful timeline reveals. Opacity/transform primarily; 0.4–0.8s, y <=24px, restrained staggers; run reveal once where appropriate. Use matchMedia/context, remove triggers and restore styles on teardown. Avoid animating layout and expensive filters. Failure must not block content.
 - Lenis on compatible fine-pointer devices only, if reduced motion is off. Native touch and keyboard fallback. Use its official CSS. Synchronize with ScrollTrigger and one ticker: `autoRaf: false` if driving from GSAP, named callback `time => lenis.raf(time * 1000)`. Apply lag smoothing settings from version docs, remove callbacks/destroy instance when disabled, avoid duplicate RAF. Preserve hash, anchors, history, native focus scroll and modal internal scroll; `scroll-margin-top` for sticky nav. Refresh triggers only after actual layout change. Test native mode.
-- Three.js lazy loaded after critical content, one renderer and one decorative hero scene. Static SVG fallback initially visible and when WebGL fails. Canvas has defined dimensions, no accessible content hidden inside it. Keep scene inexpensive; bounded DPR 1.5–2 depending on device, resize from actual canvas dimensions, camera aspect updated. No expensive postprocessing by default. Render on demand or pause offscreen/hidden; do not run permanent animation needlessly. Dispose of geometry/material/texture/renderer and detach listeners; handle context loss. Mobile uses static by default unless benchmarking supports 3D. No GPU-heavy scene at expense of content.
+- The active portrait design does not load Three.js or require WebGL. The original hero scene module may remain as unused source, but must not enter the active bundle. If a future approved design restores it, lazy load after critical content, keep one inexpensive renderer, provide a visible static SVG fallback, bound DPR, pause offscreen/hidden, handle context loss and dispose all resources. Never obscure accessible content with a canvas.
 
 ## 8. Performance and SEO policies
 
